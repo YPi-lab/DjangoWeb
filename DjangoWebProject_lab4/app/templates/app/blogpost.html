@@ -1,0 +1,85 @@
+html
+{% extends "app/layout.html" %}
+
+{% block content %}
+<style>
+    .well textarea {
+        height: 60px;
+        width: 100%;
+        resize: vertical;
+        margin-bottom: 10px;
+    }
+
+    .well {
+        overflow: auto;
+        padding: 15px;
+    }
+
+    .comment-block {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .back-btn {
+        margin-bottom: 20px;
+    }
+
+    .post-image {
+        display: block;
+        margin: 20px auto; 
+        border-radius: 15px; 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+        <a href="{% url 'blog' %}" class="btn btn-default btn-sm back-btn">
+            <span class="glyphicon glyphicon-arrow-left"></span> Назад
+        </a>
+
+        <div class="page-header">
+            <h1>{{ post_1.title }}</h1>
+        </div>
+
+        {% if post_1.image and post_1.image.url != '/media/temp.jpg' %}
+        <img src="{{ post_1.image.url }}" alt="Картинка статьи блога" class="post-image" style="max-width: 100%; height: auto;" />
+        {% endif %}
+
+        <p class="lead" style="font-size: 16px;">{{ post_1.content|linebreaksbr }}</p>
+
+        <hr />
+
+        {% if user.is_authenticated %}
+        <div class="well">
+            <h4 style="margin-top:0;">Добавить комментарий</h4>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-sm pull-right">Отправить комментарий</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="alert alert-info small">Для добавления комментария, пожалуйста, авторизуйтесь.</div>
+        {% endif %}
+
+        <h3 style="margin-top: 30px;">Комментарии</h3>
+        {% for comment in comments %}
+        <div class="comment-block" style="margin-bottom: 15px; font-family: sans-serif;">
+            <strong style="color: #2c3e50; font-weight: 800; font-size: 1.1em;">{{ comment.author }}</strong>
+
+            <small style="color: #95a5a6; margin-left: 10px;">{{ comment.date|date:"d.m.Y H:i" }}</small>
+
+            <p style="margin-top: 5px; color: #34495e; font-weight: 600; line-height: 1.5;">
+                {{ comment.text|linebreaksbr }}
+            </p>
+        </div>
+        {% empty %}
+        <p class="text-muted small">Комментариев пока нет.</p>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}
