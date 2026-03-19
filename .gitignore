@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Django-specific
+db.sqlite3
+media/
+static_content/
+amvera.yml.local
