@@ -8,7 +8,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['myblog9012.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'app',
