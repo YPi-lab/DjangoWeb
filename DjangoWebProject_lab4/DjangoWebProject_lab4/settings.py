@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '10d9d411-e35d-4387-8a89-0dc0ceb5fd80'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
