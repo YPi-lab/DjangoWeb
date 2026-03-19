@@ -8,7 +8,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'app',
@@ -51,10 +51,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoWebProject_lab4.wsgi.application'
 
+if os.path.exists('/data'):
+    DATABASE_PATH = '/data/db.sqlite3'
+else:
+
+    DATABASE_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': DATABASE_PATH,
     }
 }
 
@@ -80,7 +86,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_content')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+if os.path.exists('/data'):
+    MEDIA_ROOT = os.path.join('/data', 'media')
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
